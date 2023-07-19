@@ -5,9 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Gill Sans", sans-serif  !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+#carousel{
+  max-height: 550px;
+}
+.pill-badge {
+  border-radius: 999px;
+  padding: 5px;
 }
