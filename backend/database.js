@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const mongoURI = 'mongodb+srv://mahiman:test1234@cluster0.rscrpzf.mongodb.net/Hunger_issues?retryWrites=true&w=majority';
+mongoose.set("strictQuery", false);
+const mongoURI = 'mongodb+srv://mahiman:test1234@cluster0.rscrpzf.mongodb.net/Hunger_issues?retryWrites=true&w=majority&appName=Cluster0';
 
 const mongoDB = async () => {
    
