@@ -60,7 +60,7 @@ router.post("/loginuser",  [
     if (!pwdCompare) {
       return res
         .status(400)
-        .json({ errors: "Try logging in with correct credentials !!" });
+        .json({ errors: "Try logging in with correct credentials. Thank You !!" });
     }
     const data={
       user:{
