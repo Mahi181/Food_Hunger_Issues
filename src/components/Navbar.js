@@ -4,8 +4,7 @@ import Modal from '../Modal';
 
 import Cart from '../screens/Cart';
 import { useCart } from './ContextReducer';
-import Badge from '@material-ui/core/Badge';
-
+import { Badge } from '@chakra-ui/react';
 
 export default function Navbar() {
 
@@ -56,8 +55,8 @@ navigate('/login')
     </li>
       :""}
       </ul>
-      <li  className="nav-item me-auto mb-2 mb-lg-0">Hello, {loginUser && loginUser.name}
-              </li>
+      {/* <li  className="nav-item me-auto mb-2 mb-lg-0">Hello{loginUser && loginUser.name}
+              </li> */}
       {(!localStorage.getItem("authToken"))?
       <form className='d-flex'>
           <Link className="btn btn-success btn-rounded mx-2" to="/login">Login</Link>

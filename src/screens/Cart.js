@@ -1,6 +1,7 @@
 import React from 'react'
-import Delete from '@material-ui/icons/Delete'
+
 import { useCart, useDispatchCart } from '../components/ContextReducer';
+import { Button } from '@chakra-ui/react';
 
 export default function Cart() {
     let data = useCart();
@@ -15,7 +16,8 @@ export default function Cart() {
     const handleCheckOut = async () => {
         let userEmail = localStorage.getItem("userEmail"); //  get the email of the logged in user
         // console.log(data,localStorage.getItem("userEmail"),new Date())
-        let response = await fetch("http://localhost:5002/api/orderdata", { // send the order to database
+        const apiUrl = process.env.REACT_APP_API_URL;
+        let response = await fetch(`${apiUrl}/api/orderdata`, { // send the order to database
           // credentials: 'include',
 
           // Origin:"http://localhost:3000/login",
@@ -57,7 +59,7 @@ export default function Cart() {
                 <td>{food.qty}</td>
                 <td>{food.size}</td>
                 <td>{food.price}</td>
-                <td ><button type="button" className="btn p-0"><Delete onClick={() => { dispatch({ type: "REMOVE", index: index }) }} /></button> </td></tr>
+                <td ><button type="button" className="btn p-0"><Button onClick={() => { dispatch({ type: "REMOVE", index: index }) }} /></button> </td></tr>
             ))}
           </tbody>
         </table>

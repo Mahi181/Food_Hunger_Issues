@@ -15,7 +15,8 @@ let navigate=useNavigate()
   const handlesubmit = async (e) => {
     e.preventDefault(); //synthetic parameter jaha pr bhi mera handle submit click ho rha hai vo parameter mera e hai
     setLoading(true);
-    const response = await fetch("http://localhost:5002/api/loginuser", {
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const response = await fetch(`${apiUrl}/api/loginuser`, {
       //createuser yaha se hit hoga
       method: "POST",
       headers: {
