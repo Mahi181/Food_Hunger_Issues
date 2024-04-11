@@ -1,9 +1,11 @@
 
 const express = require('express')
 require('dotenv').config();
-
+const cors=require('cors')
 const app = express()
 const port = 5002
+app.use(cors());
+
 const mongoDB=require("./database")
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", `${process.env.SERVER}`);
