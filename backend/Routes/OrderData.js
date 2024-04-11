@@ -33,7 +33,7 @@ router.post("/orderData", async (req, res) => {
         });
       } catch (error) {
     
-        res.send("Server Error: " + error.message);
+        res.send("Server Error : " + error.message);
       }
     }
   });

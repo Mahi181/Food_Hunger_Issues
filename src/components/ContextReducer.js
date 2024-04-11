@@ -27,7 +27,7 @@ switch(action.type){
         let emparr=[]
         return emparr
             default:
-                console.log("Error in Reducer");
+                console.log("Error in reducer");
 }
 }
 

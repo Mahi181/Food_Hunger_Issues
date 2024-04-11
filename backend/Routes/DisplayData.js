@@ -8,7 +8,7 @@ router.post('/fooddata',(req,res)=>{
         res.send([global.sample,global.foodCategory])
     } catch (error) {
         console.error(error.message);
-res.send("server error")
+res.send("Server error")
     }
 })
 
