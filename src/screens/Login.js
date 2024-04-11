@@ -1,8 +1,10 @@
 import React,{useState} from 'react'
 import Navbar from '../components/Navbar';
-import { useNavigate, Link } from "react-router-dom";
-export default function Login() {
 
+import { useNavigate, Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
+export default function Login() {
+  const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState({
    
     email: "",
@@ -12,7 +14,8 @@ export default function Login() {
 let navigate=useNavigate()
   const handlesubmit = async (e) => {
     e.preventDefault(); //synthetic parameter jaha pr bhi mera handle submit click ho rha hai vo parameter mera e hai
-    const response = await fetch("http://localhost:5000/api/loginuser", {
+    setLoading(true);
+    const response = await fetch("http://localhost:5002/api/loginuser", {
       //createuser yaha se hit hoga
       method: "POST",
       headers: {
@@ -25,11 +28,23 @@ let navigate=useNavigate()
        
       }), //we have to send our body by using stringify
     });
+    setLoading(false);
+    // message.success("Login successfull");
     const json = await response.json();
     console.log(json);
 
     if (json.success) {
+      // Store user information in an object
+      const userObject = {
+        _id: json._id,
+        name: json.name,
+        location: json.location,
+        email: json.email,
+        // ... add other properties as needed
+    };
+    console.log(credentials.email);
       localStorage.setItem("userEmail",credentials.email)
+      localStorage.setItem("user", JSON.stringify(userObject)); // Convert to string if you want to store it as a string
       localStorage.setItem("authToken",json.authToken)
       console.log(localStorage.getItem("authToken"))
       navigate('/')
@@ -48,7 +63,7 @@ let navigate=useNavigate()
     <div>
       <Navbar />
     </div>
-    
+    {loading && <Spinner />}
    <div className="container">
         <form  className='w-50 m-auto mt-5 border bg-dark border-success rounded' onSubmit={handlesubmit}>
    <div className="m-3">

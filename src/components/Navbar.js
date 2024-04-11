@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import Modal from '../Modal';
 
@@ -9,12 +9,22 @@ import Badge from '@material-ui/core/Badge';
 
 export default function Navbar() {
 
+  const [loginUser, setLoginUser] = useState("");
   const[cartView,setCartView]=useState(false)
+
+  
   let navigate = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setLoginUser(user);
+    }
+  }, []);
   let data=useCart()
 
 const handleLogout= ()=>{
 localStorage.removeItem("authToken");
+localStorage.clear();
 navigate('/login')
 }
 
@@ -46,7 +56,8 @@ navigate('/login')
     </li>
       :""}
       </ul>
-
+      <li  className="nav-item me-auto mb-2 mb-lg-0">Hello, {loginUser && loginUser.name}
+              </li>
       {(!localStorage.getItem("authToken"))?
       <form className='d-flex'>
           <Link className="btn btn-success btn-rounded mx-2" to="/login">Login</Link>

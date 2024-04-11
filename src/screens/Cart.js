@@ -13,12 +13,13 @@ export default function Cart() {
       )
     }
     const handleCheckOut = async () => {
-        let userEmail = localStorage.getItem("userEmail");
+        let userEmail = localStorage.getItem("userEmail"); //  get the email of the logged in user
         // console.log(data,localStorage.getItem("userEmail"),new Date())
-        let response = await fetch("http://localhost:5000/api/orderdata", {
+        let response = await fetch("http://localhost:5002/api/orderdata", { // send the order to database
           // credentials: 'include',
+
           // Origin:"http://localhost:3000/login",
-          method: 'POST',
+          method: 'POST',  // 
           headers: {
             'Content-Type': 'application/json'
           },

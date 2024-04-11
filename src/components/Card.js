@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatchCart, useCart } from "./ContextReducer";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Card(props) {
   let dispatch = useDispatchCart();
   let options = props.options;
@@ -9,16 +12,20 @@ export default function Card(props) {
   let priceOptions = Object.keys(options);
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
+  
   const handleAddToCart = async () => {
     let food = [];
     for (const item of data) {
       if (item.id === foodItem._id) {
         food = item;
-
         break;
       }
     }
-    if (food !== []) {
+  
+    console.log(food);
+    console.log(new Date());
+  
+    if (food.length !== 0) {
       if (food.size === size) {
         await dispatch({
           type: "UPDATE",
@@ -26,7 +33,6 @@ export default function Card(props) {
           price: finalPrice,
           qty: qty,
         });
-        return;
       } else if (food.size !== size) {
         await dispatch({
           type: "ADD",
@@ -35,13 +41,25 @@ export default function Card(props) {
           price: finalPrice,
           qty: qty,
           size: size,
-          des:props.foodItem.description,
+          des: props.foodItem.description,
           img: props.ImgSrc,
         });
-        return;
-        }  
+      }
+  
+      // Always show the notification even if the item already exists in the cart
+      toast.success(`${props.foodItem.name} added to cart!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+  
       return;
     }
+  
     await dispatch({
       type: "ADD",
       id: props.foodItem._id,
@@ -51,10 +69,27 @@ export default function Card(props) {
       size: size,
       img: props.ImgSrc,
     });
+  
+    // Show the notification when adding a new item to the cart
+    toast.success(`${props.foodItem.name} added to cart!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
   useEffect(() => {
-    setSize(priceRef.current.value);
-  }, []);
+    // Check if priceRef.current is defined before setting the size
+    if (priceRef.current && priceOptions.includes(priceRef.current.value)) {
+      setSize(priceRef.current.value);
+    } else {
+      // Set a default size if priceRef.current.value is not valid
+      setSize(priceOptions[0]);
+    }
+  }, [priceOptions]);
   let finalPrice = qty * parseInt(options[size]);
   return (
     <div>
